@@ -12,4 +12,22 @@ public class TestGirToGnomeJava {
 		Assert.assertEquals("Not expected value", "WebHistoryItemWithData",
 				GirToGnomeJava.mapToJavaMethodName(methodName));
 	}
+	
+	@Test
+	public void testName()
+	{
+		String matcher = "(const\\s+)?(g?)char\\s*\\*";
+		
+		String text = "gchar*";
+		Assert.assertTrue(text, text.matches(matcher));
+		
+		text = "gchar *";
+		Assert.assertTrue(text, text.matches(matcher));
+		
+		text = "char*";
+		Assert.assertTrue(text, text.matches(matcher));
+		
+		text = "const char*";
+		Assert.assertTrue(text, text.matches(matcher));
+	}
 }

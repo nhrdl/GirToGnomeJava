@@ -209,6 +209,7 @@ public class GirToGnomeJava {
 	private static void generateMethod(StringBuffer buff, JCodeModel model,
 			String parent, String nameSpace, JDefinedClass cls, Node method,
 			String cname) throws Exception {
+		
 		String methodName = executeXPathString(method, "./@name");
 		startSExp(buff, "define-method", methodName);
 
@@ -218,7 +219,7 @@ public class GirToGnomeJava {
 		String type = executeXPathString(method,
 				"./ns:return-value/ns:type/@c:type");
 		String retType = buildParentString(type);
-		if (retType.equals("void")) {
+		if (retType == null || retType.equals("void")) {
 			retType = "none";
 		}
 		addSExp(buff, 2, "return-type", retType);
@@ -306,6 +307,7 @@ public class GirToGnomeJava {
 		for (int i = 0, iMax = params.getLength(); i < iMax; i++) {
 			param = params.item(i);
 			String paramName = executeXPathString(param, "./@name");
+			if (paramName == null) continue;
 			String cType = getJavaType(
 					executeXPathString(param, "./ns:type/@c:type"), nameSpace);
 
@@ -318,10 +320,13 @@ public class GirToGnomeJava {
 	}
 
 	private static String getJavaType(String type, String nameSpace) {
-		if (type.equals("gchar*")) {
+		String matcher = "(const\\s+)?(g?)char\\s*\\*";
+		if (type.matches(matcher)) {
 			return "java.lang.String";
 		}
-		if (type.equals("gssize")) {
+		
+		
+		if (type.matches("gssize|guint")) {
 			return "int";
 		}
 		type = type.replace(nameSpace, "");
