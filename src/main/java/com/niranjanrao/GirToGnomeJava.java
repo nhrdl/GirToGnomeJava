@@ -327,7 +327,8 @@ public class GirToGnomeJava {
 		if (type == null) {
 			return null;
 		}
-		final String matcher = "(const\\s+)?(g?)char\\s*\\*";
+		type = type.replaceAll("const\\s+", "");
+		final String matcher = "(g?)char\\s*\\*";
 		if (type.matches(matcher)) {
 			return "java.lang.String";
 		}
