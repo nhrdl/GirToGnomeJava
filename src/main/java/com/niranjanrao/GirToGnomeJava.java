@@ -71,7 +71,16 @@ public class GirToGnomeJava {
 			includeSList.add(includeNList.item(iClass).getTextContent());
 		}
 		final String[] include = includeSList.toArray(new String[0]);
-		System.out.println("Include files: " + include);
+		Iterator<String> iterator = includeSList.iterator();
+		StringBuilder files= new StringBuilder();
+		while (iterator.hasNext()) {
+			Object next =  iterator.next();
+			files.append(next.toString());
+			if (iterator.hasNext()) {
+				files.append(", ");
+			}
+		}
+		System.out.printf("Include files: %s%n", files);
 
 		final JCodeModel model = new JCodeModel();
 		generatePlumbing(model, nameSpace);
@@ -327,7 +336,8 @@ public class GirToGnomeJava {
 		if (type == null) {
 			return null;
 		}
-		final String matcher = "(const\\s+)?(g?)char\\s*\\*";
+		type = type.replaceAll("const\\s+", "");
+		final String matcher = "(g?)char\\s*\\*";
 		if (type.matches(matcher)) {
 			return "java.lang.String";
 		}
