@@ -99,6 +99,11 @@ public class GirToGnomeJava {
 			for (int iClass = 0, iClassMax = list.getLength(); iClass < iClassMax; iClass++) {
 				generateEnumDef(javaGnomeOutputDir, model, list.item(iClass), nameSpace, include);
 			}
+
+			list = executeXPathList(doc, "//ns:record");
+			for (int iClass = 0, iClassMax = list.getLength(); iClass < iClassMax; iClass++) {
+				generateDef(javaGnomeOutputDir, model, list.item(iClass), nameSpace, include);
+			}
 		}
 
 		model.build(new File(javaGnomeOutputDir + "/src/bindings"));
