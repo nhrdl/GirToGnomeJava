@@ -16,18 +16,10 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import com.sun.codemodel.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import com.sun.codemodel.ClassType;
-import com.sun.codemodel.JClass;
-import com.sun.codemodel.JCodeModel;
-import com.sun.codemodel.JDefinedClass;
-import com.sun.codemodel.JInvocation;
-import com.sun.codemodel.JMethod;
-import com.sun.codemodel.JMod;
-import com.sun.codemodel.JVar;
 
 public class GirToGnomeJava {
 
@@ -102,7 +94,10 @@ public class GirToGnomeJava {
 
 			list = executeXPathList(doc, "//ns:record");
 			for (int iClass = 0, iClassMax = list.getLength(); iClass < iClassMax; iClass++) {
-				generateDef(javaGnomeOutputDir, model, list.item(iClass), nameSpace, include);
+				try {
+					generateDef(javaGnomeOutputDir, model, list.item(iClass), nameSpace, include);
+				} catch (JClassAlreadyExistsException e) {
+				}
 			}
 		}
 
