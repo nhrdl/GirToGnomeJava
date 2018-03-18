@@ -137,7 +137,7 @@ public class GirToGnomeJava {
 		}
 		buff.append("  )").append(NL);
 		endSExp(buff);
-		final PrintWriter fos = new PrintWriter(javaGnomeOutputDir + "/src/defs/" + nameSpace + "_" + name + ".defs");
+		final PrintWriter fos = new PrintWriter(javaGnomeOutputDir + "/src/defs/" + nameSpace + name + ".defs");
 		fos.write(buff.toString());
 		fos.flush();
 		fos.close();
@@ -210,7 +210,7 @@ public class GirToGnomeJava {
 
 		generateMethods(buff, model, parent, nameSpace, cls, item, plumbing);
 
-		final PrintWriter fos = new PrintWriter(javaGnomeOutputDir + "/src/defs/" + nameSpace + "_" + cname + ".defs");
+		final PrintWriter fos = new PrintWriter(javaGnomeOutputDir + "/src/defs/" + nameSpace + cname + ".defs");
 		fos.write(buff.toString());
 		fos.flush();
 		fos.close();
