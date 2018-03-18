@@ -153,9 +153,9 @@ public class GirToGnomeJava {
 	}
 
 	private static String getPackageName(String nameSpace) {
-		nameSpace = firstLetterLower(nameSpace);
+		//nameSpace = firstLetterLower(nameSpace);
 
-		return "org.gnome." + nameSpace;
+		return "org.gnome." + nameSpace.toLowerCase();
 	}
 
 	private static String firstLetterLower(String nameSpace) {
